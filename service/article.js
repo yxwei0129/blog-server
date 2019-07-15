@@ -4,12 +4,29 @@
  */
 const Article = require('../model/article');
 
-//为模型扩充方法
+//博客服务层
+const ArticleService = {
 
-Article.findAll().then(function(project) {
+    /**
+     * 获取所有博客列表
+     */
+    getArticleList: function () {
+        return new Promise(function (resolve, reject) {
+            Article.findAll().then(function (project) {
+                if (project) {
+                    resolve(project);
+                } else {
+                    reject({
+                        code: '1001',
+                        info: '没有博客'
+                    })
+                }
+            });
+        });
 
-    console.log(JSON.stringify(project));
+    }
+};
+module.exports = ArticleService;
 
-});
 
 
