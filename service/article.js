@@ -4,6 +4,8 @@
  */
 const JsonWrite = require('../util/output');
 const Article = require('../model/article');
+const BlogArticle = require('../model/detail');
+const mongoose = require('mongoose');
 
 //博客服务层
 const ArticleService = {
@@ -14,6 +16,9 @@ const ArticleService = {
      * @param limit 限制
      */
     getArticleList: function (start, limit) {
+
+        var BlogMongo = mongoose.model('BlogMongo', BlogArticle);
+
         return new Promise(function (resolve, reject) {
             Article.findAll(
                 {
@@ -21,8 +26,17 @@ const ArticleService = {
                     offset: start * limit
                 }
             ).then(function (project) {
+                console.log(project)
                 if (project) {
-                    resolve(JsonWrite.success(project));
+                    new BlogMongo({
+                        name: 'yxwei',
+                        id: '1111111111',
+                        html: '<head>第一个mongoose插入调试</head>'
+                    }).save(function (res) {
+                        console.log(res);
+                        resolve(JsonWrite.success(project));
+
+                    })
                 }
             }, function (reason) {
                 reject(JsonWrite.error(reason))
