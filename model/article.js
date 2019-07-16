@@ -9,7 +9,7 @@ var moment = require('moment');
 //引入数据库配置信息
 const sequelize = require('../lib/mysql');
 
-const Article = sequelize.define('ui_article', {
+const Article = sequelize.define('article', {
     id: {
         field: 'id', //博客id
         primaryKey: true,//主键
@@ -17,6 +17,10 @@ const Article = sequelize.define('ui_article', {
     },
     userId: {
         field: 'user_id', //博客作者id
+        type: Sequelize.UUID
+    },
+    detailId: {
+        field: 'detail_id', //对应moongobd中博客具体html富文本
         type: Sequelize.UUID
     },
     title: {
@@ -49,14 +53,14 @@ const Article = sequelize.define('ui_article', {
         field: 'like_count', // 博客点赞数
         type: Sequelize.INTEGER,
         get: function () {
-            return this.getDataValue('like_count').toString();
+            return this.getDataValue('like_count');
         }
     },
     commentCount: {
         field: 'comment_count', //博客评论个数
         type: Sequelize.INTEGER,
         get: function () {
-            return this.getDataValue('comment_count').toString();
+            return this.getDataValue('comment_count');
         }
     },
     imgSource: {
@@ -65,7 +69,7 @@ const Article = sequelize.define('ui_article', {
     }
 }, {
     timestamps: false,     // 不要添加时间戳属性 (updatedAt, createdAt)
-    tableName: 'article',     // 定义表名
+    tableName: 'article'    // 定义表名
 });
 
 module.exports = Article;
