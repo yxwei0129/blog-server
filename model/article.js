@@ -13,65 +13,59 @@ const Article = sequelize.define('ui_article', {
     id: {
         field: 'id', //博客id
         primaryKey: true,//主键
-        type: Sequelize.UUID,
-        get: function () {
-            return this.getDataValue('id').toString();
-        }
+        type: Sequelize.UUID
     },
-    user_id: {
-        field: 'article_user_id', //博客作者id
-        type: Sequelize.UUID,
-        get: function () {
-            return this.getDataValue('user_id').toString();
-        }
+    userId: {
+        field: 'user_id', //博客作者id
+        type: Sequelize.UUID
     },
     title: {
-        field: 'article_title', //博客作者
+        field: 'title', //博客作者
         type: Sequelize.STRING
     },
     category: {
-        field: 'article_category', //博客类别
+        field: 'category', //博客类别
         type: Sequelize.STRING
     },
-    user_name: {
-        field: 'article_author_name', //博客作者名称
+    tag: {
+        field: 'tag',
         type: Sequelize.STRING
     },
-    update_time: {
+    updateTime: {
         field: 'update_time',
         type: Sequelize.DATE,
         get: function () {
             return moment(this.getDataValue('update_time')).format('YYYY-MM-DD HH:mm:ss');
         }
     },
-    create_time: {
+    createTime: {
         field: 'create_time',
         type: Sequelize.DATE,
         get: function () {
-            return moment(this.getDataValue('update_time')).format('YYYY-MM-DD HH:mm:ss');
+            return moment(this.getDataValue('create_time')).format('YYYY-MM-DD HH:mm:ss');
         }
     },
-    like_count: {
-        field: 'article_like_count', // 博客点赞数
+    likeCount: {
+        field: 'like_count', // 博客点赞数
         type: Sequelize.INTEGER,
-        get:function () {
+        get: function () {
             return this.getDataValue('like_count').toString();
         }
     },
-    comment_count: {
-        field: 'article_comment_count', //博客评论个数
+    commentCount: {
+        field: 'comment_count', //博客评论个数
         type: Sequelize.INTEGER,
-        get:function () {
+        get: function () {
             return this.getDataValue('comment_count').toString();
         }
     },
-    img_source: {
-        field: 'article_img_source',
+    imgSource: {
+        field: 'img_source',
         type: Sequelize.STRING
     }
 }, {
     timestamps: false,     // 不要添加时间戳属性 (updatedAt, createdAt)
-    tableName: 'ui_article',     // 定义表名
+    tableName: 'article',     // 定义表名
 });
 
 module.exports = Article;

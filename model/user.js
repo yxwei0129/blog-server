@@ -16,11 +16,23 @@ const User = sequelize.define('user', {//创建一个User对象
     },
     username: {
         field: 'username',
-        type: Sequelize.STRING(16)
+        type: Sequelize.STRING(50)
     },
     password: {
         field: 'password',
         type: Sequelize.STRING(16)
+    },
+    phone: {
+        field: 'phone',
+        type: Sequelize.STRING(20)
+    },
+    city: {
+        field: 'city',
+        type: Sequelize.STRING(20)
+    },
+    email: {
+        field: 'email',
+        type: Sequelize.STRING(50)
     }
 }, {
     tableName: 'user',//表名
