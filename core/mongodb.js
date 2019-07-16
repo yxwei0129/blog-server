@@ -3,12 +3,12 @@
  * mongodb 配置文件
  */
 var mongoose = require('mongoose'),
-    DB_URL = 'mongodb://localhost:27017/mongoosesample';
+    DB_URL = 'mongodb://localhost:27017/my_blog';
 
 /**
  * 连接
  */
-mongoose.connect(DB_URL);
+mongoose.connect(DB_URL, {autoIndex: false});
 
 /**
  * 连接成功
@@ -20,7 +20,7 @@ mongoose.connection.on('connected', function () {
 /**
  * 连接异常
  */
-mongoose.connection.on('error',function (err) {
+mongoose.connection.on('error', function (err) {
     console.log('Mongoose connection error: ' + err);
 });
 
