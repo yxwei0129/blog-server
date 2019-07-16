@@ -7,7 +7,7 @@ const Sequelize = require('sequelize');
 var moment = require('moment');
 
 //引入数据库配置信息
-const sequelize = require('../lib/mysql');
+const sequelize = require('../core/mysql');
 
 const Category = sequelize.define('category', {
         id: {
