@@ -5,10 +5,11 @@
 var mongoose = require('mongoose'),
     DB_URL = 'mongodb://localhost:27017/my_blog';
 
+
 /**
  * 连接
  */
-mongoose.connect(DB_URL, {autoIndex: false});
+mongoose.connect(DB_URL,{ useNewUrlParser: true });
 
 /**
  * 连接成功
