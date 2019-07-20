@@ -2,6 +2,7 @@
  * created by Yuxin Wei on 2019/7/17
  * 写入mongodb HTML文本
  */
+var logger = require('log4js').getLogger();
 
 //博客详情model
 const BlogDetail = require('../model/detail');

@@ -5,6 +5,7 @@
 const JsonWrite = require('../util/output');
 const Article = require('../model/article');
 const DetailService = require('../service/detail');
+var logger = require('log4js').getLogger();
 
 //博客服务层
 const ArticleService = {
@@ -25,8 +26,10 @@ const ArticleService = {
             ).then(function (project) {
                 if (project) {
                     DetailService.findOne(23).then(function (value) {
-                        resolve(JsonWrite.success(value));
+                        logger.info('getArticleList success' + JSON.stringify(project));
+                        resolve(JsonWrite.success(project));
                     });
+
                 }
             }, function (reason) {
                 reject(JsonWrite.error(reason))
