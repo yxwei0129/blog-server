@@ -4,7 +4,6 @@
  */
 var mongoose = require('../core/mongodb');
 var moment = require('moment');
-var co = require('co')
 
 var BlogSchema = new mongoose.Schema({
         articleId: {  //博客id
