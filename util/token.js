@@ -3,19 +3,39 @@
  * token 创建、验证 签名
  */
 var jwt = require('jsonwebtoken');
-exports.signkey = 'yxwei_node_express_vue_blog';
+var logger = require('log4js').getLogger();
+var signkey = 'yxwei_node_express_vue_blog';
+const jsonSeq = require('./jsonSeq');
 
 exports.createToken = function (username, userid) {
     return new Promise(function (resolve, reject) {
-        const token = jwt.sign({name: username, _id: userid}, signkey, {expiresIn: 10})
-        resolve(token)
+        var token = jwt.sign({userName: username, userId: userid}, signkey, {
+            expiresIn: 10 // 授权时效5
+        });
+        if (token) {
+            resolve(token)
+        } else {
+            reject(token)
+            process.exit(-1)
+        }
     })
 
 }
 
-exports.vertifyToken = function (token) {
+exports.vertifyToken = function (token, res, req) {
     return new Promise(function (resolve, reject) {
-        var info = jwt.verify(token.split(' ')[1], signkey);
-        resolve(info);
+        jwt.verify(token, signkey, function (err, decode) {
+            if (err) {
+                logger.error(JSON.stringify(err));
+                res.status(401).send(jsonSeq.error(401, 'invalid token', '认证失败，请重新登录!'));
+            } else {
+                // 解析必要的数据（相应字段为定义token时的字段）
+                // logger.info(util.format('Decoded from JWT token: username - %s, orgname - %s', decode.username, decode.orgName));
+                // 跳出中间件
+                resolve(decode);
+            }
+        });
     })
 }
+
+exports.signkey = signkey;
