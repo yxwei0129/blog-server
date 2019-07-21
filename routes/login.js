@@ -10,6 +10,7 @@ const LoginService = require('../service/login');
 const JsonWrite = require('../util/output');
 
 router.get('/login', function (req, res) {
+    console.log(req.query);
 
     var loginName = req.query.loginName;
     var password = req.query.password;
@@ -20,7 +21,7 @@ router.get('/login', function (req, res) {
 });
 
 router.get('/logout', function (req, res) {
-    res.send('logout')
+    res.send({data:Math.random()})
 })
 
 

@@ -5,6 +5,8 @@
 const User = require('../model/user');
 const Crypto = require('../util/crypto');
 const JsonWrite = require('../util/output');
+var logger = require('log4js').getLogger();
+const jwt = require('jsonwebtoken');
 
 const LoginService = {
 
@@ -24,7 +26,12 @@ const LoginService = {
                                 const flag = Crypto.cryptoPassword(password) === result[0].password;
                                 if (flag) {
                                     //验证通过
-                                    resolve(result[0])
+                                    logger.info('login success:' + JSON.stringify(result[0]));
+                                    var secretKey = 'blog';
+                                    var token = jwt.sign({namw: 'yxwei'}, secretKey, {
+                                        expiresIn: 5 // 授权时效24小时
+                                    });
+                                    resolve(JsonWrite.success('', {token: token}, '')) //TODO 创建token
                                 } else {
                                     //验证失败
                                     resolve(JsonWrite.error('用户名或密码错误!'));
