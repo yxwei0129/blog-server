@@ -4,18 +4,18 @@
  */
 
 var Json = {
-    success: function (res) {
+    success: function (status, data, message) {
         return {
-            status: 200,
-            data: res,
-            message: '操作成功!'
+            status: status || 200,
+            data: data,
+            message: message || '操作成功!'
         }
     },
-    error: function (res) {
+    error: function (status, data, message) {
         return {
-            status: -1,
-            data: res,
-            message: '操作失败!'
+            status: status || -1,
+            data: data,
+            message: message || '操作失败!'
         }
     }
 };
