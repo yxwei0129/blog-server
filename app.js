@@ -6,7 +6,7 @@ var index = require('./routes/article');
 var users = require('./routes/users');
 var login = require('./routes/login');
 
-var token = require('./util/token_vertify.js');
+var Auth = require('./util/token.js');
 var expressJwt = require('express-jwt');
 var app = express();
 
@@ -42,41 +42,23 @@ var logger = log4js.getLogger();
 
 logger.level = 'debug';
 app.use(log4js.connectLogger(logger, {format: ':remote-addr :method :url :status :response-time ms'}));
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    var token = req.headers['authorization'];
-    if (token == undefined) {
-        next()
-    } else {
-        token.vertifyToken(token).then(function (value) {
-            req.data = value;
-            next()
-        }).catch(function (reason) {
-            next()
-        })
-    }
-})
 
-//验证token是否过期并规定哪些路由不用验证
+
+//设置除login外，所有的api都要验证token
 app.use(expressJwt({
-    secret: token.signkey
+    secret: Auth.signkey
 }).unless({
-    path: ['/management/login','/management/logout']//除了这个地址，其他的URL都需要验证
+    path: ['/management/login']//除了这个地址，其他的URL都需要验证
 }));
 
 // error handler
 app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    if (err.status == 401) {
-        res.status(401).send('token失效');
-    }
-
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+    var token = req.headers['token'];
+    Auth.vertifyToken(token, res, req).then(function (value) {
+        next()
+    }).catch(function (reason) {
+        next()
+    })
 });
 
 app.use('/', index);
