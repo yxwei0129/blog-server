@@ -2,7 +2,7 @@
  * created by Yuxin Wei on 2019/7/13
  * 获取文章
  */
-const JsonWrite = require('../util/output');
+const jsonSeq = require('../util/jsonSeq');
 const Article = require('../model/article');
 const DetailService = require('../service/detail');
 var logger = require('log4js').getLogger();
@@ -27,12 +27,12 @@ const ArticleService = {
                 if (project) {
                     DetailService.findOne(23).then(function (value) {
                         logger.info('getArticleList success' + JSON.stringify(project));
-                        resolve(JsonWrite.success(project));
+                        resolve(jsonSeq.success(project));
                     });
 
                 }
             }, function (reason) {
-                reject(JsonWrite.error(reason))
+                reject(jsonSeq.error(reason))
             });
         });
 
