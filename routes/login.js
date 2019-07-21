@@ -7,11 +7,9 @@ var express = require('express');
 var router = express.Router();
 const LoginService = require('../service/login');
 
-const JsonWrite = require('../util/output');
+const JsonWrite = require('../util/jsonSeq');
 
 router.get('/login', function (req, res) {
-    console.log(req.query);
-
     var loginName = req.query.loginName;
     var password = req.query.password;
 
