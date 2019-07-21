@@ -44,7 +44,7 @@ User.sync({force: true}).then(function (value) {
     return User.create({
         id: 'eff4d2c5-ce65-4d68-8e03-8896bf557fbf',
         username: 'yxwei',
-        password: '123456',
+        password: '6fa1682f0d088c188df35ff5b30a6c4a',
         phone: '13635510292',
         city: '合肥',
         email: 'supreme129@yeah.net'
