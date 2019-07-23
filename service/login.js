@@ -4,9 +4,9 @@
  */
 var User = require('../model/user');
 var Crypto = require('../util/crypto');
-var JsonWrite = require('../util/jsonSeq');
+var jsonSeq = require('../util/jsonSeq');
 var logger = require('log4js').getLogger();
-var jwtUti=require('../util/token');
+var jwtUti = require('../util/token');
 
 var LoginService = {
 
@@ -26,17 +26,17 @@ var LoginService = {
                                 const flag = Crypto.cryptoPassword(password) === result[0].password;
                                 if (flag) {
                                     //验证通过
-                                    jwtUti.createToken(loginName,password).then(function (value) {
-                                        resolve(JsonWrite.success('', {token: value}, '')) //TODO 创建token
-                                        logger.info('login success:' + JSON.stringify(result[0]));
+                                    jwtUti.createToken(loginName, password).then(function (value) {
+                                        resolve(jsonSeq.success('SH-1003', {token: value}, '登录成功!'));
+                                        logger.info(JSON.stringify(result[0]));
                                     })
                                 } else {
                                     //验证失败
-                                    resolve(JsonWrite.error('用户名或密码错误!'));
+                                    resolve(jsonSeq.success('SH-1002', '', '用户名或密码错误!'));
                                 }
                             }
                             else {
-                                resolve(JsonWrite.error('用户名不存在!'));
+                                resolve(jsonSeq.success('SH-1002', '', '用户名或密码错误!'));
                             }
                         }
                     );
