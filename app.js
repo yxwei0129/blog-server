@@ -3,9 +3,8 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var index = require('./routes/article');
-var users = require('./routes/users');
 var login = require('./routes/login');
-
+var tag = require('./routes/tag');
 var Auth = require('./util/token.js');
 var expressJwt = require('express-jwt');
 var app = express();
@@ -17,8 +16,8 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended:false}));//解析 x-www-form-urlencoded
+app.use(bodyParser.json());//无法演示 解析json数据依赖于urlencoded模块 必须同时应用
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.all('*', function (req, res, next) {
@@ -62,7 +61,6 @@ app.use(function (err, req, res, next) {
 });
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/management', login);
-
+app.use('/management', tag);
 module.exports = app;
