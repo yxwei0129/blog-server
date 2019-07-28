@@ -23,14 +23,14 @@ const Tag = sequelize.define('tag', {
         field: 'update_time',
         type: Sequelize.DATE,
         get: function () {
-            return moment(this.getDataValue('update_time')).format('YYYY-MM-DD HH:mm:ss');
+            return moment(this.getDataValue('updateTime')).format('YYYY-MM-DD HH:mm:ss');
         }
     },
     createTime: {
         field: 'create_time',
         type: Sequelize.DATE,
         get: function () {
-            return moment(this.getDataValue('create_time')).format('YYYY-MM-DD HH:mm:ss');
+            return moment(this.getDataValue('createTime')).format('YYYY-MM-DD HH:mm:ss');
         }
     },
     createBy: {
