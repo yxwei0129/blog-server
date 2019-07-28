@@ -20,7 +20,7 @@ const User = sequelize.define('user', {//创建一个User对象
     },
     password: {
         field: 'password',
-        type: Sequelize.STRING(16)
+        type: Sequelize.STRING(32)
     },
     phone: {
         field: 'phone',
