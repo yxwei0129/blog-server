@@ -6,12 +6,15 @@ var express = require('express');
 var router = express.Router();
 const TagService = require('../service/tag');
 const jsonSeq = require('../util/jsonSeq');
+var logger = require('log4js').getLogger();
 
 /**
  * 获取全部标签
  */
-router.get('/getTagList', function (res, req) {
-
+router.get('/getTagList', function (req, res) {
+    TagService.query().then(function (value) {
+        res.send(value)
+    })
 });
 
 /**
@@ -19,15 +22,19 @@ router.get('/getTagList', function (res, req) {
  */
 router.post('/saveTag', function (req, res) {
     var id = req.body.id;
-    var name = req.body.namme;
+    var name = req.body.name;
+    logger.info(JSON.stringify(req.body));
     if (id === '' || name === '') {
-        res.send(jsonSeq.success('SH-2001', '', '标签必填参数为空!'))
+       return res.send(jsonSeq.success('SH-1001', '', '标签必填参数为空!'))
     }
     TagService.save(id, name).then(function (value) {
         res.send(value)
     })
 });
 
+/**
+ * 根据id删除tag
+ */
 router.post('/deleteTag', function (req, res) {
     var id = req.body.id;
     if (id === '') {
