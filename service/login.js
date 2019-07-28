@@ -1,6 +1,6 @@
 /**
  * created by Yuxin Wei on 2019/7/20
- * 登录、推出服务
+ * 登录、退出服务
  */
 var User = require('../model/user');
 var Crypto = require('../util/crypto');
@@ -42,7 +42,7 @@ var LoginService = {
                     );
                 }
             ).catch(function (reason) {
-                reject(reason)
+                reject(jsonSeq.error('SH-1004',reason,'登录异常!'));
                 process.exit(1)
             })
         }
