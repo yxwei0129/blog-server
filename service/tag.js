@@ -22,18 +22,27 @@ var TagService = {
                         id: id
                     }
             }).then(function (value) {
+                logger.info(JSON.stringify(value))
                 if (value) {
                     //更新
-                    Tag.name = name;
+                    Tag.update({name: name, updateTime: new Date()}, {
+                        where: {
+                            id: id
+                        }
+                    }).then(function (res) {
+                        if (res) {
+                            resolve(jsonSeq.success('SH-2001', res, '保存成功!'))
+                        }
+                    })
                 } else {
                     //插入
                     Tag.build({id: id, name: name, updateTime: new Date(), createTime: new Date(), createBy: 'yxwei'})
+                        .save().then(function (res) {
+                        if (res) {
+                            resolve(jsonSeq.success('SH-2001', res, '保存成功!'))
+                        }
+                    })
                 }
-                Tag.save().then(function (res) {
-                    if (res) {
-                        resolve(jsonSeq.success('SH-2002', res, '保存成功!'))
-                    }
-                })
             }).catch(function (reason) {
                 reject(jsonSeq.error('SH-2001', reason, '保存异常!'));
                 process.exit(1)
@@ -53,14 +62,26 @@ var TagService = {
                 }
             }).then(function (value) {
                 if (value) {
-                    resolve(jsonSeq.success('SH-2003', value, '删除成功!'))
-                } else {
-                    reject(jsonSeq.error('SH-2004', value, '删除失败!'))
+                    resolve(jsonSeq.success('SH-2001', value, '删除成功!'))
                 }
             })
         })
-    }
+    },
 
+    /**
+     * 查询所有tag
+     */
+    query: function () {
+        return new Promise(function (resolve, reject) {
+            Tag.findAll().then(function (value) {
+                logger.info(JSON.stringify(value))
+                resolve(jsonSeq.success('SH-2001', value, '操作成功!'));
+            }).catch(function (reason) {
+                reject(jsonSeq.error('SH-4001', reason, '保存异常!'));
+                process.exit(1)
+            })
+        }).catch(new Function())
+    }
 };
 
 module.exports = TagService;
