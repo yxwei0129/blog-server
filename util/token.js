@@ -10,7 +10,7 @@ const jsonSeq = require('./jsonSeq');
 exports.createToken = function (username, userid) {
     return new Promise(function (resolve, reject) {
         var token = jwt.sign({userName: username, userId: userid}, signkey, {
-            expiresIn: 10 // 授权时效5
+            expiresIn: 60 * 60 * 1 // 授权时效1小时
         });
         if (token) {
             resolve(token)
