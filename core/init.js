@@ -6,8 +6,11 @@
 const Article = require('../model/article');
 const User = require('../model/user');
 const Category = require('../model/category');
+const Tag = require('../model/tag')
 
-// 通过 sync 方法同步数据结构
+/**
+ * 通过 sync 方法同步文章结构
+ */
 Article.sync({force: true}).then(function (value) {
     return Article.bulkCreate([{
         id: '5b005dc9-5a3f-414a-bb12-6462c9d291a5',
@@ -45,12 +48,15 @@ User.sync({force: true}).then(function (value) {
         id: 'eff4d2c5-ce65-4d68-8e03-8896bf557fbf',
         username: 'yxwei',
         password: '6fa1682f0d088c188df35ff5b30a6c4a',
-        phone: '13635510292',
+        phone: '1363551****',
         city: '合肥',
         email: 'supreme129@yeah.net'
     })
 });
 
+/**
+ * 初始化分类表
+ */
 Category.sync({force: true}).then(function (value) {
     return Category.bulkCreate([
         {
@@ -69,3 +75,13 @@ Category.sync({force: true}).then(function (value) {
         }
     ])
 });
+
+Tag.sync({force: false}).then(function (value) {
+    return Tag.bulkCreate([{
+        id: '2',
+        name: '那些年',
+        updateTime: '2019-07-16 22:15:42',
+        createTime: '2019-07-16 22:15:42',
+        createBy: 'yxwei'
+    }])
+})

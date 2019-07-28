@@ -23,7 +23,8 @@ const sequelize = new Sequelize(mysql.database, mysql.user, mysql.password, {
         max: 5,//最大连接池
         min: 0,
         idle: 10000
-    }
+    },
+    timezone: '+08:00' //东八时区
 });
 
 module.exports = sequelize;//导出
