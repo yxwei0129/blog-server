@@ -1,22 +1,23 @@
 /**
- * created by Yuxin Wei on 2019/7/28
- * 新增、保存、删除标签
+ * created by Yuxin Wei on 2019/7/30
  */
 var logger = require('log4js').getLogger();
 var jsonSeq = require('../util/jsonSeq');
-var Tag = require('../model/tag');
+var Category = require('../model/category');
 
-var TagService = {
+var CategoryService = {
 
     /**
-     * 新增、编辑保存，先判断是否存在id，若不存在则插入，存在直接更新
+     * 保存
      * @param id
      * @param name
+     * @param description
+     * @returns {Promise}
      */
-    save: function (id, name) {
+    save: function (id, name, description) {
+
         return new Promise(function (resolve, reject) {
-            //先查找
-            Tag.findOne({
+            Category.findOne({
                 where:
                     {
                         id: id
@@ -25,7 +26,7 @@ var TagService = {
                 logger.info(JSON.stringify(value))
                 if (value) {
                     //更新
-                    Tag.update({name: name, updateTime: new Date()}, {
+                    Category.update({name: name, description: description, updateTime: new Date()}, {
                         where: {
                             id: id
                         }
@@ -36,8 +37,13 @@ var TagService = {
                     })
                 } else {
                     //插入
-                    Tag.build({id: id, name: name, updateTime: new Date(), createTime: new Date()})
-                        .save().then(function (res) {
+                    Category.build({
+                        id: id,
+                        name: name,
+                        description: description,
+                        updateTime: new Date(),
+                        createTime: new Date()
+                    }).save().then(function (res) {
                         if (res) {
                             resolve(jsonSeq.success('SH-2001', res, '保存成功!'))
                         }
@@ -47,16 +53,33 @@ var TagService = {
                 reject(jsonSeq.error('SH-2001', reason, '保存异常!'));
                 process.exit(1)
             })
+
         })
+
     },
 
     /**
-     * 根据id删除tag
+     * 查询所有category
+     */
+    query: function () {
+        return new Promise(function (resolve, reject) {
+            Category.findAll().then(function (value) {
+                logger.info(JSON.stringify(value))
+                resolve(jsonSeq.success('SH-2001', value, '操作成功!'));
+            }).catch(function (reason) {
+                reject(jsonSeq.error('SH-4001', reason, '保存异常!'));
+                process.exit(1)
+            })
+        }).catch(new Function())
+    },
+
+    /**
+     * 根据id删除category
      * @param id
      */
     delete: function (id) {
         return new Promise(function (resolve, reject) {
-            Tag.destroy({
+            Category.destroy({
                 where: {
                     id: id
                 }
@@ -67,21 +90,6 @@ var TagService = {
             })
         })
     },
+}
 
-    /**
-     * 查询所有tag
-     */
-    query: function () {
-        return new Promise(function (resolve, reject) {
-            Tag.findAll().then(function (value) {
-                logger.info(JSON.stringify(value))
-                resolve(jsonSeq.success('SH-2001', value, '操作成功!'));
-            }).catch(function (reason) {
-                reject(jsonSeq.error('SH-4001', reason, '保存异常!'));
-                process.exit(1)
-            })
-        }).catch(new Function())
-    }
-};
-
-module.exports = TagService;
+module.exports = CategoryService;

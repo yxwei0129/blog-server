@@ -22,13 +22,13 @@ var LoginService = {
                             username: loginName
                         }
                     }).then(function (result) {
-                            if (result.length) {
+                        logger.info(JSON.stringify(result[0]));
+                        if (result.length) {
                                 const flag = Crypto.cryptoPassword(password) === result[0].password;
                                 if (flag) {
                                     //验证通过
                                     jwtUti.createToken(loginName, password).then(function (value) {
                                         resolve(jsonSeq.success('SH-1003', {token: value}, '登录成功!'));
-                                        logger.info(JSON.stringify(result[0]));
                                     })
                                 } else {
                                     //验证失败
