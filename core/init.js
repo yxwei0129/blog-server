@@ -43,7 +43,7 @@ Article.sync({force: true}).then(function (value) {
 /**
  * 初始化用户表
  */
-User.sync({force: true}).then(function (value) {
+User.sync({force: false}).then(function (value) {
     return User.create({
         id: 'eff4d2c5-ce65-4d68-8e03-8896bf557fbf',
         username: 'yxwei',
@@ -53,11 +53,11 @@ User.sync({force: true}).then(function (value) {
         email: 'supreme129@yeah.net'
     })
 });
-
-/**
- * 初始化分类表
- */
-Category.sync({force: true}).then(function (value) {
+//
+// /**
+//  * 初始化分类表
+//  */
+Category.sync({force: false}).then(function (value) {
     return Category.bulkCreate([
         {
             id: '1',
@@ -81,7 +81,6 @@ Tag.sync({force: false}).then(function (value) {
         id: '2',
         name: '那些年',
         updateTime: '2019-07-16 22:15:42',
-        createTime: '2019-07-16 22:15:42',
-        createBy: 'yxwei'
+        createTime: '2019-07-16 22:15:42'
     }])
 })

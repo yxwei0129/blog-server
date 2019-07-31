@@ -10,7 +10,7 @@ const mysql = {
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: 'my_blog',
+    database: 'blog',
     port: 3306,
     dialect: 'mysql'
 };
