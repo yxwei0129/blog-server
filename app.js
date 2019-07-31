@@ -5,6 +5,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/article');
 var login = require('./routes/login');
 var tag = require('./routes/tag');
+var category = require('./routes/category')
+
+
 var Auth = require('./util/token.js');
 var expressJwt = require('express-jwt');
 var app = express();
@@ -16,7 +19,7 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded({extended:false}));//解析 x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false}));//解析 x-www-form-urlencoded
 app.use(bodyParser.json());//无法演示 解析json数据依赖于urlencoded模块 必须同时应用
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -63,4 +66,5 @@ app.use(function (err, req, res, next) {
 app.use('/', index);
 app.use('/management', login);
 app.use('/management', tag);
+app.use('/management', category);
 module.exports = app;
