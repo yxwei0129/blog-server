@@ -28,15 +28,20 @@ const Category = sequelize.define('category', {
             field: 'update_time',
             type: Sequelize.DATE,
             get: function () {
-                return moment(this.getDataValue('update_time')).format('YYYY-MM-DD HH:mm:ss');
+                return moment(this.getDataValue('updateTime')).format('YYYY-MM-DD HH:mm:ss');
             }
         },
         createTime: {
             field: 'create_time',
             type: Sequelize.DATE,
             get: function () {
-                return moment(this.getDataValue('update_time')).format('YYYY-MM-DD HH:mm:ss');
+                return moment(this.getDataValue('createTime')).format('YYYY-MM-DD HH:mm:ss');
             }
+        },
+        createBy: {
+            field: 'create_by',
+            type:Sequelize.UUID,
+            defaultValue: 'eff4d2c5-ce65-4d68-8e03-8896bf557fbf'
         }
     }, {
         timestamps: false,     // 不要添加时间戳属性 (updatedAt, createdAt)

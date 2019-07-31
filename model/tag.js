@@ -35,7 +35,8 @@ const Tag = sequelize.define('tag', {
     },
     createBy: {
         field: 'create_by',
-        type: Sequelize.STRING
+        type: Sequelize.UUID,
+        defaultValue: 'eff4d2c5-ce65-4d68-8e03-8896bf557fbf'
     }
 }, {
     timestamps: false,     // 不要添加时间戳属性 (updatedAt, createdAt)
