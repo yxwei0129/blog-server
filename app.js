@@ -2,12 +2,10 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var index = require('./routes/article');
 var login = require('./routes/login');
 var tag = require('./routes/tag');
-var category = require('./routes/category')
-
-
+var category = require('./routes/category');
+var daily = require('./routes/daily');
 var Auth = require('./util/token.js');
 var expressJwt = require('express-jwt');
 var app = express();
@@ -63,7 +61,7 @@ app.use(function (err, req, res, next) {
     })
 });
 
-app.use('/', index);
+app.use('/management',daily);
 app.use('/management', login);
 app.use('/management', tag);
 app.use('/management', category);
