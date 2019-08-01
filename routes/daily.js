@@ -26,4 +26,16 @@ router.post('/saveDailyDetail', function (req, res) {
     })
 });
 
+/**
+ * 保存类别
+ */
+router.post('/getDailyList', function (req, res) {
+    var start = req.body.pageStart;
+    var limit = req.body.pageNumber;
+
+    DailyService.query(start, limit).then(function (value) {
+        res.send(value)
+    })
+});
+
 module.exports = router;

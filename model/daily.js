@@ -28,6 +28,10 @@ var DailySchema = new mongoose.Schema({
             type: Number,
             default: 0
         },
+        comment_count: {
+            type: Number,
+            default: 0
+        },
         delete_flag: {   //逻辑删除
             type: Boolean,
             default: false
