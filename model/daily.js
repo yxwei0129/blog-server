@@ -6,11 +6,11 @@
 var mongoose = require('../core/mongodb');
 
 var DailySchema = new mongoose.Schema({
-        id: {
+        dailyId: {
             type: String,
             required: true
         },
-        body: {
+        dailyBody: {
             type: String,
             detail: '',
             required: true
@@ -20,25 +20,24 @@ var DailySchema = new mongoose.Schema({
             default: 'eff4d2c5-ce65-4d68-8e03-8896bf557fbf',
             required: true
         },
-        comments: [{body: String, date: Date}],
-        insert_time: { // 插入时间
+        insertTime: { // 插入时间
             type: String
         },
-        like_count: {
+        likeCount: {  //主题的点赞数量
             type: Number,
             default: 0
         },
-        comment_count: {
+        commentCount: {
             type: Number,
             default: 0
         },
-        delete_flag: {   //逻辑删除
+        deleteFlag: {   //逻辑删除
             type: Boolean,
             default: false
         }
     })
 ;
 
-var DailyModel = mongoose.model('dailyrecord', DailySchema);
+var DailyModel = mongoose.model('daily_record', DailySchema);
 
 module.exports = DailyModel;
