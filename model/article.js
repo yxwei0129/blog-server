@@ -52,16 +52,12 @@ const Article = sequelize.define('article', {
     likeCount: {
         field: 'like_count', // 博客点赞数
         type: Sequelize.INTEGER,
-        get: function () {
-            return this.getDataValue('like_count');
-        }
+        defaultValue: '0'
     },
     commentCount: {
         field: 'comment_count', //博客评论个数
         type: Sequelize.INTEGER,
-        get: function () {
-            return this.getDataValue('comment_count');
-        }
+        defaultValue: '0'
     },
     imgSource: {
         field: 'img_source',

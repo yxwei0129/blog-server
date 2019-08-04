@@ -6,6 +6,8 @@ var login = require('./routes/login');
 var tag = require('./routes/tag');
 var category = require('./routes/category');
 var daily = require('./routes/daily');
+var article = require('./routes/article');
+
 var Auth = require('./util/token.js');
 var expressJwt = require('express-jwt');
 var app = express();
@@ -65,4 +67,6 @@ app.use('/management',daily);
 app.use('/management', login);
 app.use('/management', tag);
 app.use('/management', category);
+app.use('/management', article);
+
 module.exports = app;
