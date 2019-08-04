@@ -4,6 +4,7 @@
 var logger = require('log4js').getLogger();
 var jsonSeq = require('../util/jsonSeq');
 var Category = require('../model/category');
+var User = require('../model/user');
 
 var CategoryService = {
 
@@ -63,7 +64,16 @@ var CategoryService = {
      */
     query: function () {
         return new Promise(function (resolve, reject) {
-            Category.findAll().then(function (value) {
+
+            Category.belongsTo(User, { foreignKey: 'createBy'})
+
+            Category.findAll({
+                attributes: ['id', 'name', 'description', 'updateTime', 'createTime'],
+                include: {
+                    model: User, // 关联查询
+                    attributes: ['username','id']
+                }
+            }).then(function (value) {
                 logger.info(JSON.stringify(value))
                 resolve(jsonSeq.success('SH-2001', value, '操作成功!'));
             }).catch(function (reason) {

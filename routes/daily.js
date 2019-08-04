@@ -52,4 +52,16 @@ router.post('/getDailyDetail', function (req, res) {
     })
 });
 
+/**
+ * 删除daily下某个评论
+ */
+router.post('/deleteComment', function (req, res) {
+    var id = req.body.id;
+    console.log(id)
+
+    CommentService.delete(id).then(function (value) {
+        res.send(value)
+    })
+});
+
 module.exports = router;

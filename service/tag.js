@@ -5,6 +5,7 @@
 var logger = require('log4js').getLogger();
 var jsonSeq = require('../util/jsonSeq');
 var Tag = require('../model/tag');
+var User = require('../model/user');
 
 var TagService = {
 
@@ -73,7 +74,15 @@ var TagService = {
      */
     query: function () {
         return new Promise(function (resolve, reject) {
-            Tag.findAll().then(function (value) {
+            Tag.belongsTo(User, { foreignKey: 'createBy'});
+
+            Tag.findAll({
+                attributes: ['id', 'name', 'updateTime', 'createTime'],
+                include: {
+                    model: User, // 关联查询
+                    attributes: ['username','id']
+                }
+            }).then(function (value) {
                 logger.info(JSON.stringify(value))
                 resolve(jsonSeq.success('SH-2001', value, '操作成功!'));
             }).catch(function (reason) {

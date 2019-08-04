@@ -15,7 +15,7 @@ var CommentService = {
      */
     query: function (id) {
         return new Promise(function (resolve, reject) {
-            CommentModel.find({commentBelongs:id}).then(function (value) {
+            CommentModel.find({commentBelongs: id, deleteFlag: false}).then(function (value) {
                 logger.info(JSON.stringify(value))
                 resolve(jsonSeq.success('SH-2001', value, '操作成功!'));
             }).catch(function (reason) {
@@ -24,6 +24,22 @@ var CommentService = {
             })
         }).catch(new Function())
     },
+
+    /**
+     * 根据commentId删除评论
+     * @param id
+     */
+    delete: function (id) {
+        return new Promise(function (resolve, reject) {
+
+            CommentModel.update({id: id}, {$set: {deleteFlag: true}}, function (value) {
+                resolve(jsonSeq.success('SH-2001', value, '操作成功!'));
+            }).catch(function (reason) {
+                reject(jsonSeq.error('SH-4001', reason, '删除异常!'));
+                process.exit(1)
+            })
+        }).catch(new Function())
+    }
 }
 
 module.exports = CommentService
