@@ -16,6 +16,14 @@ router.get('/getArticleList', function (req, res) {
     })
 });
 
+router.get('/test', function (req, res) {
+    logger.info('获取测试数据开始')
+    ArticleService.query().then(function (value) {
+        logger.info(JSON.stringify(value))
+        res.send(value)
+    })
+});
+
 /**
  * 上传文章
  */
@@ -25,7 +33,6 @@ router.post('/uploadArticle', function (req, res) {
     var category = req.body.category;
     var tag = req.body.tag;
     var body = req.body.detail;
-    console.log(req.body)
 
     if (userId === '' || title==='' || category === '' || tag === '' || body === '') {
         return res.send(jsonSeq.success('SH-1001', '', '标签必填参数为空!'))
